@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standardit - Kasapekan Standardisointilaitos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #003366;
+            --secondary-blue: #0052a3;
+            --text-dark: #222222;
+            --text-gray: #555555;
+            --border-gray: #cccccc;
+            --bg-light: #f9f9f9;
+            --bg-white: #ffffff;
+            --row-hover: #f0f5ff;
+        }
+
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border-gray);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-img {
+            height: 48px;
+            width: auto;
+        }
+
+        .logo-text h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            font-style: italic;
+            margin-top: 0.2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 0.3rem;
+        }
+
+        nav a:hover {
+            color: var(--secondary-blue);
+            border-bottom: 2px solid var(--secondary-blue);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-gray);
+            padding-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* Standards Table */
+        .standards-container {
+            overflow-x: auto;
+            border: 1px solid var(--border-gray);
+            border-radius: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--bg-white);
+        }
+
+        thead {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-gray);
+        }
+
+        td {
+            padding: 1rem;
+            border: 1px solid var(--border-gray);
+            font-size: 0.95rem;
+        }
+
+        tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background-color: var(--row-hover);
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: var(--bg-light);
+        }
+
+        tbody tr:nth-child(even):hover {
+            background-color: var(--row-hover);
+        }
+
+        .standard-id {
+            font-weight: 600;
+            color: var(--primary-blue);
+            font-family: 'Courier New', monospace;
+        }
+
+        .status {
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            border-radius: 2px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-draft {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .status-archived {
+            background-color: #e2e3e5;
+            color: #383d41;
+            border: 1px solid #d6d8db;
+        }
+
+        .description {
+            color: var(--text-gray);
+            max-width: 300px;
+        }
+
+        .filters {
+            background-color: var(--bg-light);
+            padding: 1rem;
+            border: 1px solid var(--border-gray);
+            margin-bottom: 2rem;
+            border-radius: 2px;
+        }
+
+        .filters h3 {
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-blue);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-gray);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border-radius: 2px;
+        }
+
+        .filter-btn:hover {
+            background-color: var(--secondary-blue);
+            color: white;
+            border-color: var(--secondary-blue);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-light);
+            border-top: 1px solid var(--border-gray);
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 0.7rem;
+            }
+
+            .description {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-section" style="text-decoration: none; color: inherit;">
+                <img src="ksl-logo.png" alt="KSL Logo" class="logo-img">
+                <div class="logo-text">
+                    <h1>KSL</h1>
+                    <p>Kasapekan Standardisointilaitos</p>
+                </div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Etusivu</a></li>
+                    <li><a href="standards.html">Standardit</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <h2>Julkaistut Standardit</h2>
+        
+        <p>
+            Alla on luettelo kaikista Kasapekan Standardisointilaitoksen julkaisemista standardeista. 
+            Jokainen standardi on merkitty SL-koodilla ja siihen liittyy tila sekä julkaisupäivämäärä.
+        </p>
+
+        <!-- Filters -->
+        <div class="filters">
+            <h3>Suodata standardit:</h3>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterTable('all')">Kaikki</button>
+                <button class="filter-btn" onclick="filterTable('active')">Aktiiviset</button>
+                <button class="filter-btn" onclick="filterTable('draft')">Luonnos</button>
+                <button class="filter-btn" onclick="filterTable('archived')">Arkistoitu</button>
+            </div>
+        </div>
+
+        <!-- Standards Table -->
+        <div class="standards-container">
+            <table id="standardsTable">
+                <thead>
+                    <tr>
+                        <th style="width: 12%;">Standardi</th>
+                        <th style="width: 18%;">Otsikko</th>
+                        <th style="width: 35%;">Kuvaus</th>
+                        <th style="width: 15%;">Julkaisu</th>
+                        <th style="width: 12%;">Tila</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-status="active">
+                        <td class="standard-id">SL-0001</td>
+                        <td>Pohjastandardi</td>
+                        <td class="description">Serverin perusrakenteen ja arkkitehtuurin määritteleminen. Kaikkien muiden standardien perusta.</td>
+                        <td>15.1.2026</td>
+                        <td><span class="status status-active">Aktiivinen</span></td>
+                    </tr>
+                    <tr data-status="active">
+                        <td class="standard-id">SL-0002</td>
+                        <td>Rakennusstandardit</td>
+                        <td class="description">Rakennustyylien ja materiaalien yhtenäistäminen. Harmoniset rakennuskokonaisuudet.</td>
+                        <td>20.1.2026</td>
+                        <td><span class="status status-active">Aktiivinen</span></td>
+                    </tr>
+                    <tr data-status="active">
+                        <td class="standard-id">SL-0003</td>
+                        <td>Värijärjestelmä</td>
+                        <td class="description">Väriskeemien sopeutuminen ympäristöön. Yhtenäinen visuaalinen ilme ja väripaletti.</td>
+                        <td>25.1.2026</td>
+                        <td><span class="status status-active">Aktiivinen</span></td>
+                    </tr>
+                    <tr data-status="active">
+                        <td class="standard-id">SL-0004</td>
+                        <td>Nimeämiskonventiot</td>
+                        <td class="description">Alueiden, rakennuksien ja rakenteiden johdonmukainen nimeäminen ja merkitseminen.</td>
+                        <td>30.1.2026</td>
+                        <td><span class="status status-active">Aktiivinen</span></td>
+                    </tr>
+                    <tr data-status="active">
+                        <td class="standard-id">SL-0005</td>
+                        <td>Maastomuotoilu</td>
+                        <td class="description">Luonnollisen maastomuotoilun ja maanpinnan muokkaamisen ohjeistot ja käytännöt.</td>
+                        <td>5.2.2026</td>
+                        <td><span class="status status-active">Aktiivinen</span></td>
+                    </tr>
+                    <tr data-status="active">
+                        <td class="standard-id">SL-0006</td>
+                        <td>Infrastruttuuri</td>
+                        <td class="description">Liikenneverkoston, putkilinjojen ja muun infrastruktuurin standardointi.</td>
+                        <td>10.2.2026</td>
+                        <td><span class="status status-active">Aktiivinen</span></td>
+                    </tr>
+                    <tr data-status="draft">
+                        <td class="standard-id">SL-0007</td>
+                        <td>Vesienhallinta</td>
+                        <td class="description">Vesistöjen, kanavien ja vesijohtojärjestelmien suunnittelu ja rakentaminen.</td>
+                        <td>–</td>
+                        <td><span class="status status-draft">Luonnos</span></td>
+                    </tr>
+                    <tr data-status="draft">
+                        <td class="standard-id">SL-0008</td>
+                        <td>Kasvistandardit</td>
+                        <td class="description">Puiden, pensaiden ja muun kasviston käytön ohjeet ja standardit.</td>
+                        <td>–</td>
+                        <td><span class="status status-draft">Luonnos</span></td>
+                    </tr>
+                    <tr data-status="active">
+                        <td class="standard-id">SL-0009</td>
+                        <td>Valaistusjärjestelmät</td>
+                        <td class="description">Valaistusratkaisuiden ja valon käytön standardointi eri alueilla.</td>
+                        <td>15.2.2026</td>
+                        <td><span class="status status-active">Aktiivinen</span></td>
+                    </tr>
+                    <tr data-status="archived">
+                        <td class="standard-id">SL-0010</td>
+                        <td>Legacy-rakennusohjeita</td>
+                        <td class="description">Vanhentuneet rakennusohjeita. Korvattu SL-0002:lla. Arkistoitu referenssiä varten.</td>
+                        <td>1.1.2025</td>
+                        <td><span class="status status-archived">Arkistoitu</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p style="margin-top: 2rem; font-size: 0.9rem;">
+            <strong>Tilan selitys:</strong><br>
+            <strong>Aktiivinen</strong> – Standardi on voimassa ja sitä noudatetaan.<br>
+            <strong>Luonnos</strong> – Standardi on kehitteillä eikä vielä virallisesti julkaistu.<br>
+            <strong>Arkistoitu</strong> – Standardi on korvattu tai vanhentunut, säilytetään historiatietona.
+        </p>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Kasapekan Standardisointilaitos. Kaikki oikeudet pidätetään.</p>
+    </footer>
+
+    <script>
+        function filterTable(status) {
+            const rows = document.querySelectorAll('#standardsTable tbody tr');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter rows
+            rows.forEach(row => {
+                if (status === 'all') {
+                    row.style.display = '';
+                } else {
+                    row.style.display = row.getAttribute('data-status') === status ? '' : 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
